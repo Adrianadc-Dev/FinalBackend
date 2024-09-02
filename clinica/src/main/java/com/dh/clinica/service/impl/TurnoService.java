@@ -120,6 +120,11 @@ public class TurnoService implements ITurnoService {
         return turnoResponseDto;
     }
 
+    @Override
+    public List<Turno> buscarTurnoPaciente(String apellidoPaciente){
+        return turnoRepository.buscarTurnoPorApellidoPaciente(apellidoPaciente);
+    }
+
 
 
 }
