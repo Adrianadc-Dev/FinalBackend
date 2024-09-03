@@ -125,6 +125,10 @@ public class TurnoService implements ITurnoService {
         return turnoRepository.buscarTurnoPorApellidoPaciente(apellidoPaciente);
     }
 
+    @Override
+    public List<Turno> buscarRangoFechas(LocalDate fechaInicial, LocalDate fechaFinal) {
+        return turnoRepository.rangoFechas(fechaInicial,fechaFinal);
+    }
 
 
 }

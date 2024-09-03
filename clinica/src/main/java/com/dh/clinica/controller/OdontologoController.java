@@ -1,6 +1,7 @@
 package com.dh.clinica.controller;
 
 import com.dh.clinica.entity.Odontologo;
+import com.dh.clinica.entity.Paciente;
 import com.dh.clinica.service.impl.OdontologoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,5 +67,6 @@ public class OdontologoController {
                 return  ResponseEntity.notFound().build();
             }
         }
+
     }
 

@@ -5,6 +5,7 @@ import com.dh.clinica.dto.response.TurnoResponseDto;
 import com.dh.clinica.entity.Paciente;
 import com.dh.clinica.entity.Turno;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ public interface ITurnoService {
     void modificarTurno(TurnoModificarDto turnoModificarDto);
     void eliminarTurno(Integer id);
     List<Turno> buscarTurnoPaciente(String apellidoPaciente);
+    List<Turno> buscarRangoFechas(LocalDate fechaInicial, LocalDate fechaFinal);
 
 }
 
