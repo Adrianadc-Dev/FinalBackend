@@ -8,6 +8,8 @@ import com.dh.clinica.dto.response.TurnoResponseDto;
 import com.dh.clinica.entity.Odontologo;
 import com.dh.clinica.entity.Paciente;
 import com.dh.clinica.entity.Turno;
+import com.dh.clinica.exception.BadRequestException;
+import com.dh.clinica.exception.ResourceNotFoundException;
 import com.dh.clinica.repository.ITurnoRepository;
 import com.dh.clinica.service.ITurnoService;
 import org.modelmapper.ModelMapper;
@@ -51,6 +53,8 @@ public class TurnoService implements ITurnoService {
             // mapear el turnoDesdeDb a turnoResponseDto
 
             turnoARetornar = mapearATurnoResponse(turnoDesdeDb);
+        } else{
+            throw new BadRequestException("El paciente o el odontologo no existen");
         }
         return turnoARetornar;
     }
@@ -83,7 +87,7 @@ public class TurnoService implements ITurnoService {
         Turno turno = null;
         if (paciente.isPresent() && odontologo.isPresent()) {
             turno = new Turno(turnoModificarDto.getId(), paciente.get(), odontologo.get(),
-                    LocalDate.parse(turnoModificarDto.getFecha()) );
+                    LocalDate.parse(turnoModificarDto.getFecha()));
 
             // Se persiste el turno
             turnoRepository.save(turno);
@@ -92,7 +96,13 @@ public class TurnoService implements ITurnoService {
 
     @Override
     public void eliminarTurno(Integer id) {
-        turnoRepository.deleteById(id);
+        Optional<Turno> turnoEncontrado = turnoRepository.findById(id);
+        if(turnoEncontrado.isPresent()){
+            turnoRepository.deleteById(id);
+        }else{
+            throw new ResourceNotFoundException("El turno "+ id +" no fue encontrado");
+        }
+
     }
 
     private TurnoResponseDto convertirTurnoAResponse(Turno turnoDesdeDb){

@@ -27,13 +27,16 @@ public class TurnoController {
     @PostMapping("/guardar")
     public ResponseEntity<?> guardarTurno(@RequestBody TurnoRequestDto turnoRequestDto){
         TurnoResponseDto turnoAGuardar = turnoService.guardarTurno(turnoRequestDto);
-        if(turnoAGuardar != null){
-            return ResponseEntity.ok(turnoAGuardar);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El paciente o el odontologo no fueron encontrados");
+        //if(turnoAGuardar != null){
+            return ResponseEntity.ok("{\"mensaje\": \"El turno fue guardado\"}");
+        //} else {
+          //  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El paciente o el odontologo no fueron encontrados");
         }
+        //
 
-    }
+        //
+
+
 
     @GetMapping("/buscartodos")
     public ResponseEntity<List<TurnoResponseDto>> buscarTodos(){
@@ -67,16 +70,10 @@ public class TurnoController {
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<?> eliminarTurno(@PathVariable Integer id){
-        Optional<TurnoResponseDto> turnoEncontrado = turnoService.buscarPorId(id);
-        if (turnoEncontrado.isPresent()){
             turnoService.eliminarTurno(id);
-            return ResponseEntity.ok("El turno fue eliminado");
-        }
-        else {
-            return ResponseEntity.notFound().build();
-        }
-
+            return ResponseEntity.ok("{\"mensaje\": \"El turno fue eliminado\"}");
     }
+
     @GetMapping("/buscartodos/{apellido}")
     public ResponseEntity<List<Turno>> buscarTurnoApellidoPaciente(@PathVariable String apellido){
         return ResponseEntity.ok(turnoService.buscarTurnoPaciente(apellido));
