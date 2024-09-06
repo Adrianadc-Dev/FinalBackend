@@ -25,15 +25,11 @@ function fetchOdontologos() {
               <td>${odont.id}</td>
               <td>${odont.apellido}</td>
               <td>${odont.nombre}</td>
-              <td>${odont.dni}</td>
-              <td>${odont.fechaIngreso}</td>
-              <td>${odont.domicilio.calle}</td>
-              <td>${odont.domicilio.numero}</td>
-              <td>${odont.domicilio.localidad}</td>
-              <td>${odont.domicilio.provincia}</td>
+              <td>${odont.matricula}</td>
+
               <td>
-                <button class="btn btn-primary btn-sm" onclick="editPaciente(${odont.id}, '${odont.apellido}','${odont.nombre}', '${odont.dni}', 
-                '${odont.fechaIngreso}', '${odont.domicilio.id}', '${odont.domicilio.calle}', '${odont.domicilio.numero}', '${odont.domicilio.localidad}', '${odont.domicilio.provincia}')">Modificar</button>
+                <button class="btn btn-primary btn-sm" onclick="editPaciente(${odont.id}, '${odont.apellido}','${odont.nombre}', '${odont.matricula}' 
+                 ')">Modificar</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteOdontologo(${odont.id})">Eliminar</button>
               </td>
             `;
@@ -51,24 +47,13 @@ editOdontologo = function (
   id,
   apellido,
   nombre,
-  dni,
-  fechaIngreso,
-  idDomicilio,
-  calle,
-  numero,
-  localidad,
-  provincia
+  matricula
 ) {
   currentOdontologoId = id;
-  currentDomicilioId = idDomicilio;
   document.getElementById("editApellido").value = apellido;
   document.getElementById("editNombre").value = nombre;
-  document.getElementById("editDni").value = dni;
-  document.getElementById("editFecha").value = fechaIngreso;
-  document.getElementById("editCalle").value = calle;
-  document.getElementById("editNumero").value = numero;
-  document.getElementById("editLocalidad").value = localidad;
-  document.getElementById("editProvincia").value = provincia;
+  document.getElementById("editMatricula").value = matricula;
+
   editModal.show();
 };
 
@@ -77,12 +62,7 @@ editForm.addEventListener("submit", function (event) {
   event.preventDefault();
   const apellido = document.getElementById("editApellido").value;
   const nombre = document.getElementById("editNombre").value;
-  const dni = document.getElementById("editDni").value;
-  const fecha = document.getElementById("editFecha").value;
-  const calle = document.getElementById("editCalle").value;
-  const numero = document.getElementById("editNumero").value;
-  const localidad = document.getElementById("editLocalidad").value;
-  const provincia = document.getElementById("editProvincia").value;
+  const matricula = document.getElementById("editMatricula").value;
 
   //modificar un paciente
   fetch(`${apiURL}/odontologo/modificar`, {
@@ -94,15 +74,8 @@ editForm.addEventListener("submit", function (event) {
       id: currentOdontologoId,
       nombre,
       apellido,
-      dni,
-      fechaIngreso: fecha,
-      domicilio: {
-        id: currentDomicilioId,
-        calle,
-        numero,
-        localidad,
-        provincia,
-      },
+      marticula,
+    
     }),
   })
     .then((response) => response.json())

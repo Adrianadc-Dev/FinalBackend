@@ -44,17 +44,17 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Gestión de Pacientes
+                Gestión de Odontologos
               </a>
               <ul class="dropdown-menu">
                 <li>
                   <a class="dropdown-item" href="/listar_odontologos.html"
-                    >Listar Paciente</a
+                    >Listar Odontologos</a
                   >
                 </li>
                 <li>
                   <a class="dropdown-item" href="/agregar_odontologos.html"
-                    >Agregar Paciente</a
+                    >Agregar Odontologo</a
                   >
                 </li>
               </ul>
@@ -64,19 +64,14 @@
       </div>
     </nav>
     <div class="container-xl">
-      <h1 class="mt-5">Pacientes</h1>
+      <h1 class="mt-5">Odontologos</h1>
       <table class="table table-striped-columns" id="odontologoTable">
         <thead>
           <tr>
             <th>Orden</th>
             <th>Apellido</th>
             <th>Nombre</th>
-            <th>DNI</th>
-            <th>Fecha de Ingreso</th>
-            <th>Calle</th>
-            <th>Numero</th>
-            <th>Localidad</th>
-            <th>Provincia</th>
+            <th>Matricula</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -93,7 +88,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="editModalLabel">Modificar Paciente</h5>
+            <h5 class="modal-title" id="editModalLabel">Modificar Odontologos</h5>
             <button
               type="button"
               class="btn-close"
@@ -122,53 +117,9 @@
                 />
               </div>
               <div class="mb-3">
-                <label for="editDni" class="form-label">DNI</label>
-                <input type="text" class="form-control" id="editDni" required />
+                <label for="editMatricula" class="form-label">Matricula</label>
+                <input type="text" class="form-control" id="editMatricula" required />
               </div>
-              <div class="mb-3">
-                <label for="editFecha" class="form-label">Fecha</label>
-                <input
-                  type="date"
-                  class="form-control"
-                  id="editFecha"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="editCalle" class="form-label">Calle</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="editCalle"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="editNumero" class="form-label">Numero</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="editNumero"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="editLocalidad" class="form-label">Localidad</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="editLocalidad"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="editProvincia" class="form-label">Provincia</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="editProvincia"
-                  required
-                />
               </div>
               <button type="submit" class="btn btn-primary">
                 Guardar cambios
