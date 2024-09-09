@@ -1,6 +1,7 @@
 package com.dh.clinica.service.impl;
 import com.dh.clinica.entity.Odontologo;
 import com.dh.clinica.entity.Turno;
+import com.dh.clinica.exception.BadRequestException;
 import com.dh.clinica.exception.ResourceNotFoundException;
 import com.dh.clinica.repository.IOdontologoRepository;
 import com.dh.clinica.service.IOdontologoService;
@@ -22,7 +23,14 @@ public class OdontologoService implements IOdontologoService {
 
     @Override
     public Odontologo guardarOdontologo(Odontologo odontologo) {
-        return odontologoRepository.save(odontologo);
+        if (odontologo == null){
+            logger.warn("el odontologo no puede ser nulo");
+            throw new BadRequestException("El odontologo no puede ser nulo");
+
+        }else{
+            logger.info("odontologo guardado");
+            return odontologoRepository.save(odontologo);
+        }
     }
 
     @Override
@@ -48,6 +56,7 @@ public class OdontologoService implements IOdontologoService {
             odontologoRepository.deleteById(id);
             logger.info("el odontologo fue eliminado");
         }else{
+            logger.warn("no se pudo eliminar el odontologo" + id);
             throw new ResourceNotFoundException("El odontologo"+ id +" no fue encontrado");
         }
 

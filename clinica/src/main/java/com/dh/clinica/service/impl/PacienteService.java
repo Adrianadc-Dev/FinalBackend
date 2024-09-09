@@ -1,6 +1,7 @@
 package com.dh.clinica.service.impl;
 
 import com.dh.clinica.entity.Paciente;
+import com.dh.clinica.exception.BadRequestException;
 import com.dh.clinica.exception.ResourceNotFoundException;
 import com.dh.clinica.repository.IPacienteRepository;
 import com.dh.clinica.service.IPacienteService;
@@ -24,11 +25,15 @@ public class PacienteService implements IPacienteService {
 
     @Override
     public Paciente guardarPaciente(Paciente paciente) {
-        return pacienteRepository.save(paciente);
+        if (paciente == null){
+            logger.warn("el paciente no puede ser nulo");
+            throw new BadRequestException("El paciente no puede ser nulo");
 
-        //Paciente pacienteAGuardar= pacienteRepository.save(paciente);
-        //logger.info("Paciente guardado", pacienteAGuardar);
-        //return pacienteAGuardar;
+        }else{
+            logger.info("paciente guardado");
+            return pacienteRepository.save(paciente);
+
+        }
 
     }
 
@@ -55,6 +60,7 @@ public class PacienteService implements IPacienteService {
             logger.info("el paciente fue eliminado");
 
         }else{
+            logger.warn("no se pudo eliminar el paciente " + id);
             throw new ResourceNotFoundException("El paciente "+ id +" no fue encontrado");
 
         }

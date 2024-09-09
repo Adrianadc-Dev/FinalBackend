@@ -58,6 +58,7 @@ public class TurnoService implements ITurnoService {
 
             turnoARetornar = mapearATurnoResponse(turnoDesdeDb);
         } else{
+            logger.warn("no se puede guardar el turno, el odontologo o el paciente no existen");
             throw new BadRequestException("El paciente o el odontologo no existen");
 
         }
@@ -109,6 +110,7 @@ public class TurnoService implements ITurnoService {
             turnoRepository.deleteById(id);
             logger.info("el turno fue eliminado");
         }else{
+            logger.warn("el turno no se puede eliminar porque no fue encontrado");
             throw new ResourceNotFoundException("El turno "+ id +" no fue encontrado");
         }
 
