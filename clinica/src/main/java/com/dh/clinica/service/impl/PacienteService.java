@@ -4,6 +4,8 @@ import com.dh.clinica.entity.Paciente;
 import com.dh.clinica.exception.ResourceNotFoundException;
 import com.dh.clinica.repository.IPacienteRepository;
 import com.dh.clinica.service.IPacienteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 
@@ -12,6 +14,8 @@ import java.util.Optional;
 
 @Service
 public class PacienteService implements IPacienteService {
+    private final Logger logger = LoggerFactory.getLogger(PacienteService.class);
+
     private IPacienteRepository pacienteRepository;
 
     public PacienteService(IPacienteRepository pacienteRepository) {
@@ -21,6 +25,11 @@ public class PacienteService implements IPacienteService {
     @Override
     public Paciente guardarPaciente(Paciente paciente) {
         return pacienteRepository.save(paciente);
+
+        //Paciente pacienteAGuardar= pacienteRepository.save(paciente);
+        //logger.info("Paciente guardado", pacienteAGuardar);
+        //return pacienteAGuardar;
+
     }
 
     @Override
@@ -43,9 +52,11 @@ public class PacienteService implements IPacienteService {
         Optional<Paciente> pacienteEncontrado = pacienteRepository.findById(id);
         if(pacienteEncontrado.isPresent()){
             pacienteRepository.deleteById(id);
+            logger.info("el paciente fue eliminado");
 
         }else{
             throw new ResourceNotFoundException("El paciente "+ id +" no fue encontrado");
+
         }
 
     }

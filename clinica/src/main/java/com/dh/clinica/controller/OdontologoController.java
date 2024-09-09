@@ -3,6 +3,7 @@ package com.dh.clinica.controller;
 import com.dh.clinica.entity.Odontologo;
 import com.dh.clinica.entity.Paciente;
 import com.dh.clinica.service.impl.OdontologoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class OdontologoController {
     }
 
     @PostMapping("/guardar")
-    public ResponseEntity<Odontologo> guardarOdontologo(@RequestBody Odontologo odontologo) {
+    public ResponseEntity<Odontologo> guardarOdontologo(@Valid @RequestBody Odontologo odontologo) {
         return ResponseEntity.ok(odontologoService.guardarOdontologo(odontologo));
     }
 
@@ -32,7 +33,7 @@ public class OdontologoController {
         if (odontologo.isPresent()) {
             return ResponseEntity.ok(odontologo.get());
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Odontologo no encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"mensaje\": \"El odontologo no fue encontrado\"}");
         }
 
     }
@@ -44,7 +45,7 @@ public class OdontologoController {
     }
 
     @PutMapping("/modificar")
-    public ResponseEntity<?> modificarOdontologo(@RequestBody Odontologo odontologo) {
+    public ResponseEntity<?> modificarOdontologo(@Valid @RequestBody Odontologo odontologo) {
         Optional<Odontologo> odontologoEncontrado = odontologoService.buscarPorId(odontologo.getId());
         if (odontologoEncontrado != null) {
             odontologoService.modificarOdontologo(odontologo);
@@ -63,6 +64,11 @@ public class OdontologoController {
                 return ResponseEntity.ok("{\"mensaje\": \"El odontologo fue eliminado\"}");
 
         }
+
+    @GetMapping("/buscarOrdenados")
+    public ResponseEntity<List<Odontologo>>buscarOrdenados(){
+        return ResponseEntity.ok(odontologoService.BuscarTodosOrdenApellido());
+    }
 
     }
 

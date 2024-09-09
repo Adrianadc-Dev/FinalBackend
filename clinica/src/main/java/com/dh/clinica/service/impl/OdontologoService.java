@@ -4,6 +4,8 @@ import com.dh.clinica.entity.Turno;
 import com.dh.clinica.exception.ResourceNotFoundException;
 import com.dh.clinica.repository.IOdontologoRepository;
 import com.dh.clinica.service.IOdontologoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public class OdontologoService implements IOdontologoService {
+    private final Logger logger = LoggerFactory.getLogger(OdontologoService.class);
     private IOdontologoRepository odontologoRepository;
 
     public OdontologoService(IOdontologoRepository odontologoRepository) {
@@ -43,11 +46,17 @@ public class OdontologoService implements IOdontologoService {
         Optional<Odontologo> odontologoEncontrado = odontologoRepository.findById(id);
         if(odontologoEncontrado.isPresent()){
             odontologoRepository.deleteById(id);
+            logger.info("el odontologo fue eliminado");
         }else{
             throw new ResourceNotFoundException("El odontologo"+ id +" no fue encontrado");
         }
 
 
+    }
+
+    @Override
+    public List<Odontologo> BuscarTodosOrdenApellido() {
+        return odontologoRepository.OrderByapellidoDESC();
     }
 
 

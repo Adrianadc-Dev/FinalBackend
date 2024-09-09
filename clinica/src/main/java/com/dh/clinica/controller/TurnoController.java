@@ -6,6 +6,7 @@ import com.dh.clinica.dto.response.TurnoResponseDto;
 import com.dh.clinica.entity.Paciente;
 import com.dh.clinica.entity.Turno;
 import com.dh.clinica.service.impl.TurnoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,17 +26,13 @@ public class TurnoController {
     }
 
     @PostMapping("/guardar")
-    public ResponseEntity<?> guardarTurno(@RequestBody TurnoRequestDto turnoRequestDto){
+    public ResponseEntity<?> guardarTurno(@Valid @RequestBody TurnoRequestDto turnoRequestDto){
         TurnoResponseDto turnoAGuardar = turnoService.guardarTurno(turnoRequestDto);
         //if(turnoAGuardar != null){
             return ResponseEntity.ok("{\"mensaje\": \"El turno fue guardado\"}");
         //} else {
           //  return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El paciente o el odontologo no fueron encontrados");
         }
-        //
-
-        //
-
 
 
     @GetMapping("/buscartodos")
@@ -49,18 +46,18 @@ public class TurnoController {
         if(turno.isPresent()){
             return ResponseEntity.ok(turno);
         }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("turno no encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"mensaje\": \"El turno no fue encontrado\"}");
 
         }
 
     }
 
     @PutMapping("/modificar")
-    public ResponseEntity<?> modificarTurno(@RequestBody TurnoModificarDto turnoModificarDto){
+    public ResponseEntity<?> modificarTurno(@Valid @RequestBody TurnoModificarDto turnoModificarDto){
         Optional<TurnoResponseDto> turnoEncontrado = turnoService.buscarPorId(turnoModificarDto.getId());
         if (turnoEncontrado.isPresent()){
             turnoService.modificarTurno(turnoModificarDto);
-            return ResponseEntity.ok("El turno fue modificado");
+            return ResponseEntity.ok("{\"mensaje\": \"El turno fue modificado\"}");
 
         }else{
             return ResponseEntity.notFound().build();
@@ -79,7 +76,7 @@ public class TurnoController {
         return ResponseEntity.ok(turnoService.buscarTurnoPaciente(apellido));
     }
     @GetMapping("/busquedarango")
-    public ResponseEntity<List<Turno>> buscarPorRango (@RequestParam LocalDate fechaInicial,
+    public ResponseEntity<List<TurnoResponseDto>> buscarPorRango (@RequestParam LocalDate fechaInicial,
                                                        @RequestParam LocalDate fechaFinal){
         return ResponseEntity.ok(turnoService.buscarRangoFechas(fechaInicial,fechaFinal));
     }

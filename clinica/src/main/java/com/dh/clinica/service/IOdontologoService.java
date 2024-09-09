@@ -21,6 +21,8 @@ public interface IOdontologoService {
 
     void eliminarOdontologo(Integer id);
 
+    List<Odontologo> BuscarTodosOrdenApellido();
+
 
 }
 

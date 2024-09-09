@@ -19,7 +19,7 @@ public interface ITurnoService {
     void modificarTurno(TurnoModificarDto turnoModificarDto);
     void eliminarTurno(Integer id);
     List<Turno> buscarTurnoPaciente(String apellidoPaciente);
-    List<Turno> buscarRangoFechas(LocalDate fechaInicial, LocalDate fechaFinal);
+    List<TurnoResponseDto> buscarRangoFechas(LocalDate fechaInicial, LocalDate fechaFinal);
 
 }
 
