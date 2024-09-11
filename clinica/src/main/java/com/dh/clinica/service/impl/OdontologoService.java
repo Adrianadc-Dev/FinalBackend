@@ -35,7 +35,14 @@ public class OdontologoService implements IOdontologoService {
 
     @Override
     public Optional<Odontologo> buscarPorId(Integer id) {
-        return odontologoRepository.findById(id);
+        Optional<Odontologo> odontologoDesdeDB= odontologoRepository.findById(id);
+        if (odontologoDesdeDB.isPresent()){
+            logger.info("el odontologo con el id "+ id + "  fue encontrado");
+        }else{
+            logger.warn("el odontologo con ese id no se encuentra registrado");
+        }
+        return odontologoDesdeDB;
+
     }
 
     @Override

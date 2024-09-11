@@ -49,7 +49,7 @@ public class OdontologoController {
         Optional<Odontologo> odontologoEncontrado = odontologoService.buscarPorId(odontologo.getId());
         if (odontologoEncontrado != null) {
             odontologoService.modificarOdontologo(odontologo);
-            String jsonResponse = "{\"mensaje\": \"El odontolgo fue modificado\"}";
+            String jsonResponse = "{\"mensaje\": \"El odontologo fue modificado\"}";
             return ResponseEntity.ok(jsonResponse);
         } else {
             return ResponseEntity.notFound().build();

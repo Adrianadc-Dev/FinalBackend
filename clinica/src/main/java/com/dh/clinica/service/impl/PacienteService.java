@@ -1,5 +1,6 @@
 package com.dh.clinica.service.impl;
 
+import com.dh.clinica.entity.Odontologo;
 import com.dh.clinica.entity.Paciente;
 import com.dh.clinica.exception.BadRequestException;
 import com.dh.clinica.exception.ResourceNotFoundException;
@@ -39,7 +40,13 @@ public class PacienteService implements IPacienteService {
 
     @Override
     public Optional<Paciente> buscarPorId(Integer id) {
-        return pacienteRepository.findById(id);
+        Optional<Paciente> pacienteDesdeDB = pacienteRepository.findById(id);
+        if (pacienteDesdeDB.isPresent()){
+            logger.info("el paciente con el id "+ id + "  fue encontrado");
+        }else{
+            logger.warn("el paciente con ese id no se encuentra registrado");
+        }
+        return pacienteDesdeDB;
     }
 
     @Override
