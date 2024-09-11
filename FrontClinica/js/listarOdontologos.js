@@ -28,8 +28,8 @@ function fetchOdontologos() {
               <td>${odont.matricula}</td>
 
               <td>
-                <button class="btn btn-primary btn-sm" onclick="editPaciente(${odont.id}, '${odont.apellido}','${odont.nombre}', '${odont.matricula}' 
-                 ')">Modificar</button>
+                <button class="btn btn-primary btn-sm" onclick="editOdontologo(${odont.id}, '${odont.apellido}','${odont.nombre}', '${odont.matricula}' 
+                 )">Modificar</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteOdontologo(${odont.id})">Eliminar</button>
               </td>
             `;
@@ -64,7 +64,7 @@ editForm.addEventListener("submit", function (event) {
   const nombre = document.getElementById("editNombre").value;
   const matricula = document.getElementById("editMatricula").value;
 
-  //modificar un paciente
+  //modificar un odontologo
   fetch(`${apiURL}/odontologo/modificar`, {
     method: "PUT",
     headers: {
@@ -74,7 +74,7 @@ editForm.addEventListener("submit", function (event) {
       id: currentOdontologoId,
       nombre,
       apellido,
-      marticula,
+      matricula,
     
     }),
   })
