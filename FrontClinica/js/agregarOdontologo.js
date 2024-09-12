@@ -29,6 +29,7 @@ form.addEventListener("submit", function (event) {
       console.log(data);
       alert("Odontologo agregado con éxito");
       form.reset(); // Resetear el formulario
+      location.reload(); // Reload the page to reflect changes
     })
     .catch((error) => {
       console.error("Error agregando odontologo:", error);

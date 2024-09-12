@@ -82,8 +82,9 @@ editForm.addEventListener("submit", function (event) {
     .then((data) => {
       console.log(data);
       alert("Odontologo modificado con éxito");
-      fetchPacientes();
+      fetchOdontologos();
       editModal.hide();
+      location.reload();
     })
     .catch((error) => {
       console.error("Error editando odontologo:", error);
@@ -101,7 +102,8 @@ deleteOdontologo = function (id) {
       .then((data) => {
         console.log(data);
         alert("Odontologo eliminado con éxito");
-        fetchPacientes();
+        fetchOdontologos();
+        location.reload();
       })
       .catch((error) => {
         console.error("Error borrando odontologo:", error);
