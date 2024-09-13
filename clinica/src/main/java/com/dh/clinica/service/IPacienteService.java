@@ -13,7 +13,7 @@ public interface IPacienteService {
 
     List<Paciente> buscarTodos();
 
-    void modificarPaciente(Paciente paciente);
+    Optional<Paciente> modificarPaciente(Paciente paciente);
     void eliminarPaciente(Integer id);
 
 

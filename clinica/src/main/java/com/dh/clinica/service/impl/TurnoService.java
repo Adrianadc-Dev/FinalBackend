@@ -72,9 +72,13 @@ public class TurnoService implements ITurnoService {
         if (turnoDesdeDb.isPresent()) {
             turnoResponseDto = mapearATurnoResponse(turnoDesdeDb.get());
             logger.info("turno encontrado");
+        }else{
+            logger.warn("el turno con ese id no se encuentra registrado");
+            throw new ResourceNotFoundException("El turno "+ id +" no fue encontrado");
         }
         return Optional.ofNullable(turnoResponseDto);
     }
+
 
     @Override
     public List<TurnoResponseDto> buscarTodos() {
@@ -96,10 +100,13 @@ public class TurnoService implements ITurnoService {
         if (paciente.isPresent() && odontologo.isPresent()) {
             turno = new Turno(turnoModificarDto.getId(), paciente.get(), odontologo.get(),
                     LocalDate.parse(turnoModificarDto.getFecha()));
-
+            
             // Se persiste el turno
             turnoRepository.save(turno);
             logger.info("el turno fue modificado");
+        }else {
+            logger.warn("El turno  no fue modificado");
+            throw new ResourceNotFoundException("El turno  no fue modificado");
         }
     }
 
@@ -143,6 +150,7 @@ public class TurnoService implements ITurnoService {
 
     @Override
     public List<Turno> buscarTurnoPaciente(String apellidoPaciente){
+        logger.info("se esta buscando los turnos del paciente");
         return turnoRepository.buscarTurnoPorApellidoPaciente(apellidoPaciente);
     }
 

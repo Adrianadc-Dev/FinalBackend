@@ -42,26 +42,14 @@ public class TurnoController {
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<?>  buscarPorId(@PathVariable Integer id) {
-        Optional<TurnoResponseDto> turno = turnoService.buscarPorId(id);
-        if(turno.isPresent()){
-            return ResponseEntity.ok(turno);
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"mensaje\": \"El turno no fue encontrado\"}");
-
-        }
+        return ResponseEntity.ok(turnoService.buscarPorId(id).get());
 
     }
 
     @PutMapping("/modificar")
     public ResponseEntity<?> modificarTurno(@Valid @RequestBody TurnoModificarDto turnoModificarDto){
-        Optional<TurnoResponseDto> turnoEncontrado = turnoService.buscarPorId(turnoModificarDto.getId());
-        if (turnoEncontrado.isPresent()){
             turnoService.modificarTurno(turnoModificarDto);
             return ResponseEntity.ok("{\"mensaje\": \"El turno fue modificado\"}");
-
-        }else{
-            return ResponseEntity.notFound().build();
-        }
 
     }
 

@@ -29,13 +29,8 @@ public class OdontologoController {
     @GetMapping("/buscar/{id}")
 
     public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
-        Optional<Odontologo> odontologo = odontologoService.buscarPorId(id);
-        if (odontologo.isPresent()) {
-            return ResponseEntity.ok(odontologo.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"mensaje\": \"El odontologo no fue encontrado\"}");
-        }
-
+        //Optional<Odontologo> odontologo = odontologoService.buscarPorId(id);
+        return ResponseEntity.ok(odontologoService.buscarPorId(id).get());
     }
 
     @GetMapping("/buscartodos")
@@ -46,20 +41,15 @@ public class OdontologoController {
 
     @PutMapping("/modificar")
     public ResponseEntity<?> modificarOdontologo(@Valid @RequestBody Odontologo odontologo) {
-        Optional<Odontologo> odontologoEncontrado = odontologoService.buscarPorId(odontologo.getId());
-        if (odontologoEncontrado != null) {
-            odontologoService.modificarOdontologo(odontologo);
-            String jsonResponse = "{\"mensaje\": \"El odontologo fue modificado\"}";
-            return ResponseEntity.ok(jsonResponse);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+           // return ResponseEntity.ok(odontologoService.modificarOdontologo(odontologo));
+        odontologoService.modificarOdontologo(odontologo);
+        String jsonResponse = "{\"mensaje\": \"El odontologo fue modificado\"}";
+        return ResponseEntity.ok(jsonResponse);
     }
 
 
     @DeleteMapping("/eliminar/{id}")
         public ResponseEntity<?> eliminarOdontologo (@PathVariable Integer id){
-
                 odontologoService.eliminarOdontologo(id);
                 return ResponseEntity.ok("{\"mensaje\": \"El odontologo fue eliminado\"}");
 

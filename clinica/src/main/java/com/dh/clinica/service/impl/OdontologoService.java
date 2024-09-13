@@ -1,6 +1,5 @@
 package com.dh.clinica.service.impl;
 import com.dh.clinica.entity.Odontologo;
-import com.dh.clinica.entity.Turno;
 import com.dh.clinica.exception.BadRequestException;
 import com.dh.clinica.exception.ResourceNotFoundException;
 import com.dh.clinica.repository.IOdontologoRepository;
@@ -40,6 +39,7 @@ public class OdontologoService implements IOdontologoService {
             logger.info("el odontologo con el id "+ id + "  fue encontrado");
         }else{
             logger.warn("el odontologo con ese id no se encuentra registrado");
+            throw new ResourceNotFoundException("El odontologo"+ id +" no fue encontrado");
         }
         return odontologoDesdeDB;
 
@@ -47,12 +47,22 @@ public class OdontologoService implements IOdontologoService {
 
     @Override
     public List<Odontologo> buscarTodos() {
+        logger.info("se estan buscando todos los pacientes");
         return odontologoRepository.findAll();
     }
 
     @Override
-    public void modificarOdontologo(Odontologo odontologo) {
-        odontologoRepository.save(odontologo);
+    public Optional<Odontologo> modificarOdontologo(Odontologo odontologo) {
+        Optional<Odontologo> odontologoDesdeDB= odontologoRepository.findById(odontologo.getId());
+        if (odontologoDesdeDB.isPresent()){
+            logger.info("el odontologo con el id "+ odontologo.getId()+ "  fue modificado");
+            odontologoRepository.save(odontologo);
+        }else{
+            logger.warn("el odontologo con ese id no se encuentra registrado");
+            throw new ResourceNotFoundException("El odontologo "+ odontologo.getId() +" no fue modificado");
+        }
+        return odontologoDesdeDB;
+
     }
 
 
@@ -72,6 +82,8 @@ public class OdontologoService implements IOdontologoService {
 
     @Override
     public List<Odontologo> BuscarTodosOrdenApellido() {
+        logger.info("se estan buscando los odontologos en orden de apellido");
+
         return odontologoRepository.OrderByapellidoDESC();
     }
 

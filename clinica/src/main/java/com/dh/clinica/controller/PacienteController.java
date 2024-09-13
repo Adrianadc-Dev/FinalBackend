@@ -26,15 +26,9 @@ public class PacienteController {
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<?>  buscarPorId(@PathVariable Integer id) {
-       Optional<Paciente> paciente = pacienteService.buscarPorId(id);
-        if(paciente.isPresent()){
-            return ResponseEntity.ok(paciente.get());
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"mensaje\": \"Paciente no encontrado\"}");
-            //otras formas de hacer lo mismo de la linea anterior
-            // return ResponseEntity.status(HttpStatus.valueOf(404).build();
-            // return ResponseEntity.notFound().build();
-        }
+
+        return ResponseEntity.ok(pacienteService.buscarPorId(id).get());
+
 
     }
     @GetMapping("/buscartodos")
@@ -45,15 +39,9 @@ public class PacienteController {
 
     @PutMapping("/modificar")
     public ResponseEntity<?> modificarPaciente(@Valid @RequestBody Paciente paciente){
-        Optional<Paciente> pacienteEncontrado = pacienteService.buscarPorId(paciente.getId());
-        if (pacienteEncontrado.isPresent()){
-            pacienteService.modificarPaciente(pacienteEncontrado.get());
+            pacienteService.modificarPaciente(paciente);
             String jsonResponse = "{\"mensaje\": \"El paciente fue modificado\"}";
             return ResponseEntity.ok(jsonResponse);
-
-        }else{
-            return ResponseEntity.notFound().build();
-        }
 
     }
 
