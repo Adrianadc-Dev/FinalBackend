@@ -47,7 +47,7 @@ public class OdontologoService implements IOdontologoService {
 
     @Override
     public List<Odontologo> buscarTodos() {
-        logger.info("se estan buscando todos los pacientes");
+        logger.info("se estan buscando todos los odontologos");
         return odontologoRepository.findAll();
     }
 
