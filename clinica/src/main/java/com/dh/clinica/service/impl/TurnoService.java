@@ -94,21 +94,22 @@ public class TurnoService implements ITurnoService {
 
     @Override
     public void modificarTurno(TurnoModificarDto turnoModificarDto) {
+        Optional<Turno> turnoEncontrado = turnoRepository.findById(turnoModificarDto.getId());
         Optional<Paciente> paciente = pacienteService.buscarPorId(turnoModificarDto.getPaciente_id());
         Optional<Odontologo> odontologo = odontologService.buscarPorId(turnoModificarDto.getOdontologo_id());
         Turno turno = null;
-        if (paciente.isPresent() && odontologo.isPresent()) {
+        if (paciente.isPresent() && odontologo.isPresent () && turnoEncontrado.isPresent()) {
             turno = new Turno(turnoModificarDto.getId(), paciente.get(), odontologo.get(),
                     LocalDate.parse(turnoModificarDto.getFecha()));
-            
-            // Se persiste el turno
-            turnoRepository.save(turno);
-            logger.info("el turno fue modificado");
-        }else {
-            logger.warn("El turno  no fue modificado");
-            throw new ResourceNotFoundException("El turno  no fue modificado");
+                turnoRepository.save(turno);
+                logger.info("el turno fue modificado");
+
+            }else{
+                logger.warn("El turno  no fue modificado");
+                throw new ResourceNotFoundException("El turno  no fue modificado");
+            }
         }
-    }
+
 
     @Override
     public void eliminarTurno(Integer id) {
